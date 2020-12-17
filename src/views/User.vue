@@ -1,21 +1,21 @@
 <template>
     <div class="wrapper_content_user">
-        <span class="title">Личный кабинет</span>
+        <span class="title fix">Личный кабинет</span>
         <div class="user_top">
             <div class="user_ico">
                 <i class="fas fa-graduation-cap"></i>
             </div>
             <div class="user_data">
-                <span>name fio</span>
-                <span class="mail">fdsfdsdfs@mail</span>
+                <span>{{user.name + ' ' + user.surname}}</span>
+                <span class="mail">{{user.login}}</span>
             </div>
         </div>
-        <span class="title">Персональная информация</span>
         <div class="user_bottom">
-            <input type="text" placeholder="Имя">
-            <input type="text" placeholder="Фамилия">
-            <input type="text" placeholder="Телефон">
-            <button >Сохранить</button>
+            <span class="title">Персональная информация</span>
+            <input type="text" placeholder="Имя" v-model="user.name">
+            <input type="text" placeholder="Фамилия" v-model="user.surname">
+            <input type="text" placeholder="Телефон" v-model="user.phone">
+            <button @click="save">Сохранить</button>
         </div>
     </div>
 </template>
@@ -23,24 +23,57 @@
 <script>
 export default {
     name: 'User',
+    data(){
+        return{
+            user: this.$store.state.user
+        }
+    },
+    methods:{
+        async save(){
+            this.axios.put('http://localhost:8080/api/user', this.user)
+                .then(res=>{
+                    console.log(res);
+                })
+                .catch(err=>console.log(err));
+            if(this.user.name != ''){
+                localStorage.setItem("userName", this.user.name);
+            }
+            if(this.user.surname != ''){
+                localStorage.setItem("userSurname", this.user.surname);
+            }
+            if(this.user.phone != ''){
+                localStorage.setItem("userPhone", this.user.phone);
+            }
+            console.log(this.$store.state.user);
+        }
+    },
+    mounted:function(){
+        console.log(this.$store.state.user);
+    }
 
 }
 </script>
 <style lang="scss">
 $color: #7fc7a8;
 .wrapper_content_user{
+    background-color:rgb(230, 230, 230);
+    text-align: left;
     .title{
         font-size:2rem;
     }
-    padding: 2rem 6rem; 
+    //padding: 2rem 6rem; 
 }
 .user_top{
+    padding: .5rem 3rem;
+    background-color:white;
     display:flex;
     flex-direction: row;
     align-items: center;
     margin: 3rem 0;
 }
 .user_bottom{
+    padding: 2rem 3rem 5rem;
+    background-color:white;
     display:flex;
     flex-direction: column;
     margin-top:2rem;
@@ -59,6 +92,10 @@ $color: #7fc7a8;
         background-color: $color;
         padding: 1rem;
         font-size: 1.2rem;
+    }
+    .title{
+        margin-bottom: 3rem;
+        font-size:1rem;
     }
 }
 .user_ico{

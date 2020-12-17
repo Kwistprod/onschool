@@ -13,7 +13,8 @@
     "vue": "^3.0.0",
     "vue-axios": "^3.2.0",
     "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-0",
+    "youtube-vue3": "^0.1.10"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",

@@ -3,27 +3,73 @@
     <div class="sidebar">
       <div class="top_items">
         <span>Online School</span>
-        <router-link to="/mycourses"><i class="fas fa-film pad"></i>Мое обучение</router-link>
+        <router-link to="/lessons"><i class="fas fa-film pad"></i>Мое обучение</router-link>
         <router-link to="/courses"><i class="far fa-envelope pad"></i>Программы обучения</router-link>
       </div>
       <div class="bottom_items">
         <router-link to="/"><i class="fas fa-directions pad"></i>Главная</router-link>
-        <router-link to="/user"><i class="fas fa-user pad"></i>Личный кабинет</router-link>
+        <router-link to="/user" v-if="$store.state.user.id !== null"><i class="fas fa-user pad"></i>Личный кабинет</router-link>
       </div>
     </div>
     <div class="header">
-      <div class="wrapper_auth" >
+      <div class="wrapper_auth" v-if="$store.state.user.id === null">
           <router-link to="/signin">Авторизация</router-link>
           <router-link to="/signup">Регистрация</router-link>
       </div>
-      <div class="wrapper_auth" v-if="1 == 0">
+      <div class="wrapper_auth" v-else @click="logout">
         <i class="fas fa-sign-out-alt exit"></i>
       </div>
     </div>
     <router-view class="content_main"/>
   </div>
 </template>
-
+<script>
+export default {
+  data(){
+    return{
+      user:{
+        id: Number,
+        login: ''
+      }
+    }
+  },
+  methods:{
+    logout(){
+      this.$store.commit('clearAll');
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userLogin");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userSurname");
+      localStorage.removeItem("userPhone");
+    }
+  },
+  created: async function(){
+    if(localStorage.getItem("userId")){
+      let id = localStorage.getItem("userId");
+      let login = localStorage.getItem("userLogin")
+      this.$store.commit('setId', id);
+      this.$store.commit('setLogin', login);
+      this.user.id = id;
+      this.user.login = login;
+      if(localStorage.getItem("userName") !== null){
+        this.$store.commit("setName", localStorage.getItem("userName"));
+      }
+      if(localStorage.getItem("userSurname") !== null){
+        this.$store.commit("setSurname", localStorage.getItem("userSurname"));
+      }
+      if(localStorage.getItem("userPhone") !== null){
+        this.$store.commit("setPhone", localStorage.getItem("userPhone"));
+      }
+      await this.axios.post('http://localhost:8080/api/courses/get', {userId: this.user.id}).then(res=>{
+        this.$store.commit("setCourses", res.data);
+        console.log(this.$store.state.courses);
+      });
+    } else{
+      console.log('aa');
+    }
+  }
+}
+</script>
 <style lang="scss">
 $color: #7fc7a8;
 #app {
@@ -35,6 +81,10 @@ $color: #7fc7a8;
   font-size:1rem;
   color: #2c3e50;
 
+}
+button:hover{
+  cursor:pointer;
+  background-color: #389b70;
 }
 .grid{
   display:grid;
@@ -91,7 +141,8 @@ a{
 
 }
 .exit{
-  font-size:1.45rem;
+  font-size:1.5rem;
+  margin: .8rem 0;
 }
 .exit:hover{
   cursor: pointer;

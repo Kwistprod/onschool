@@ -2,9 +2,9 @@
     <div class="wrapper_content_sign">
         <span>Авторизация</span>
         <div class="sign">
-            <input type="text" placeholder="Email">
-            <input type="text" placeholder="Пароль">
-            <button>Войти</button>
+            <input type="text" placeholder="Email" v-model="user.login">
+            <input type="password" placeholder="Пароль" v-model="user.password">
+            <button @click="send">Войти</button>
         </div>
     </div>
 </template>
@@ -12,6 +12,37 @@
 <script>
 export default {
     name:'Signin',
+    data(){
+        return{
+            user:{
+                login:'',
+                password:'',
+            }
+        }
+    },
+    methods:{
+         async send(){
+            if(this.user.login != '' && this.user.password != ''){
+                this.axios.post('http://localhost:8080/api/user/auth', this.user)
+                .then(res=>{
+                    this.$store.commit('setId', res.data.id);
+                    this.$store.commit('setLogin', res.data.login);
+                    this.$store.commit('setName', res.data.name);
+                    this.$store.commit('setSurname', res.data.surname);
+                    this.$store.commit('setPhone', res.data.phone);
+                    //save to ls
+                    localStorage.setItem("userId", res.data.id);
+                    localStorage.setItem("userLogin", res.data.login);
+                    localStorage.setItem("userName", res.data.name);
+                    localStorage.setItem("userSurname", res.data.surname);
+                    localStorage.setItem("userPhone", res.data.phone);
+                    this.$router.push("/");
+                    console.log(this.$store.state.user);
+                })
+                .catch(err=>console.log(err));
+            }
+        }
+    }
 
 }
 </script>

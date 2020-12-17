@@ -2,9 +2,9 @@
     <div class="wrapper_content_sign">
         <span>Регистрация</span>
         <div class="sign">
-            <input type="text" placeholder="Email">
-            <input type="text" placeholder="Пароль">
-            <button>Зарегистрироваться</button>
+            <input type="text" placeholder="Email" v-model="user.login">
+            <input type="password" placeholder="Пароль" v-model="user.password">
+            <button @click="send">Зарегистрироваться</button>
         </div>
     </div>
 </template>
@@ -12,6 +12,34 @@
 <script>
 export default {
     name:'Signup',
+    data(){
+        return{
+            user:{
+                login: '',
+                password: '',
+            }
+        }
+    },
+    methods:{
+        async send(){
+            if(this.user.login != '' && this.user.password != ''){
+                this.axios.post('http://localhost:8080/api/user', this.user)
+                .then(res=>{
+                    if(res.status == 200){
+                        this.$store.commit('setId', res.data.id);
+                        this.$store.commit('setLogin', res.data.login);
+                        localStorage.setItem("userId", res.data.id);
+                        localStorage.setItem("userLogin", res.data.login);
+                        this.$router.push("/");
+                    }
+                })
+                .catch(err=>{
+                    this.user.password = '';
+                    console.log(err);
+                });
+            }
+        }
+    }
 
 }
 </script>
