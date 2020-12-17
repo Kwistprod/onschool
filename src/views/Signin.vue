@@ -39,7 +39,7 @@ export default {
                     this.$router.push("/");
                     console.log(this.$store.state.user);
                 })
-                .catch(err=>console.log(err));
+                .catch(err=>alert('Ошибка'));
             }
         }
     }

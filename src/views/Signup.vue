@@ -35,6 +35,7 @@ export default {
                 })
                 .catch(err=>{
                     this.user.password = '';
+                    alert('Ошибка');
                     console.log(err);
                 });
             }
