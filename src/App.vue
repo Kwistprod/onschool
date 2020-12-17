@@ -60,7 +60,7 @@ export default {
       if(localStorage.getItem("userPhone") !== null){
         this.$store.commit("setPhone", localStorage.getItem("userPhone"));
       }
-      await this.axios.post('http://localhost:8080/api/courses/get', {userId: this.user.id}).then(res=>{
+      await this.axios.post('/api/courses/get', {userId: this.user.id}).then(res=>{
         this.$store.commit("setCourses", res.data);
         console.log(this.$store.state.courses);
       });

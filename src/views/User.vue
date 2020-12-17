@@ -30,7 +30,7 @@ export default {
     },
     methods:{
         async save(){
-            this.axios.put('http://localhost:8080/api/user', this.user)
+            this.axios.put('/api/user', this.user)
                 .then(res=>{
                     console.log(res);
                 })

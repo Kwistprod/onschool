@@ -23,7 +23,7 @@ export default {
     methods:{
         async send(){
             if(this.user.login != '' && this.user.password != ''){
-                this.axios.post('http://localhost:8080/api/user', this.user)
+                this.axios.post('/api/user', this.user)
                 .then(res=>{
                     if(res.status == 200){
                         this.$store.commit('setId', res.data.id);
@@ -31,6 +31,10 @@ export default {
                         localStorage.setItem("userId", res.data.id);
                         localStorage.setItem("userLogin", res.data.login);
                         this.$router.push("/");
+                        this.axios.post('/api/courses/get', {userId: res.data.id}).then(res=>{
+                            this.$store.commit("setCourses", res.data);
+                        console.log(this.$store.state.courses);
+                    });
                     }
                 })
                 .catch(err=>{

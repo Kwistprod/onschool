@@ -23,7 +23,7 @@ export default {
     methods:{
          async send(){
             if(this.user.login != '' && this.user.password != ''){
-                this.axios.post('http://localhost:8080/api/user/auth', this.user)
+                await this.axios.post('/api/user/auth', this.user)
                 .then(res=>{
                     this.$store.commit('setId', res.data.id);
                     this.$store.commit('setLogin', res.data.login);
@@ -38,8 +38,15 @@ export default {
                     localStorage.setItem("userPhone", res.data.phone);
                     this.$router.push("/");
                     console.log(this.$store.state.user);
+                    this.axios.post('/api/courses/get', {userId: res.data.id}).then(res=>{
+                        this.$store.commit("setCourses", res.data);
+                        console.log(this.$store.state.courses);
+                    });
                 })
-                .catch(err=>alert('Ошибка'));
+                .catch(err=>{
+                    alert('Ошибка');
+                    console.log('err :>> ', err);
+                });
             }
         }
     }

@@ -30,7 +30,7 @@ export default {
     },
     methods:{
         enroll(){
-            this.axios.post('http://localhost:8080/api/courses', {userId: this.$store.state.user.id, id: this.about.id}).then(res=>{
+            this.axios.post('/api/courses', {userId: this.$store.state.user.id, id: this.about.id}).then(res=>{
                 console.log(res.data);
             }).catch(err=>console.log(err));
             this.$router.go(-1);

@@ -49,15 +49,14 @@ export default {
             let ul = this.course.Users[0].userlessons.find(item => item.course_id == this.$route.params.courseId);
             if(ul.current_lesson == this.lesson.lesson_id){
                 this.course.Users[0].userlessons.find(item => item.course_id == this.$route.params.courseId).current_lesson++;
-                this.axios.put('http://localhost:8080/api/mylessons', ul).then(res=>console.log(res)).catch(err=>console.log(err));
+                this.axios.put('/api/mylessons', ul).then(res=>console.log(res)).catch(err=>console.log(err));
             }
         },
         async sendDZ(){
             let ul = this.course.Users[0].userlessons.find(item => item.course_id == this.$route.params.courseId);
             if(ul.current_dz == this.lesson.lesson_id){
                 this.course.Users[0].userlessons.find(item => item.course_id == this.$route.params.courseId).current_dz++;
-                this.axios.put('http://localhost:8080/api/mylessons', ul).then(res=>console.log(res)).catch(err=>console.log(err));
-                const nodemailer = require("nodemailer");
+                this.axios.put('/api/mylessons', ul).then(res=>console.log(res)).catch(err=>console.log(err));
                 console.log(this.text);
             }
         },

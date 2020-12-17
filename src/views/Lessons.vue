@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper_content_courses">
-        <div class="card_container" v-if="mycourses.length > 0">
+        <div class="card_container" v-if="$store.state.user.id !== null && mycourses.length > 0">
             <div class="card" v-for="(item, id) in mycourses" v-bind:key="id" >
                 <div class="side_left">
                     <span class="scope">{{item.scope}}</span>
@@ -27,7 +27,8 @@
                 </div>
             </div>
         </div>
-        <h1 v-else>Вы не записаны ни на один курс</h1>
+        <h1 v-if="$store.state.user.id !== null && this.mycourses !== null">Вы еще не записаны ни на один курс</h1>
+        <h1 class="error" v-if="$store.state.user.id === null">Для просмотра содержимого необходимо зарегистрироваться</h1>
     </div>
 </template>
 <script>

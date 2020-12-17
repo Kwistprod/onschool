@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <h1 v-if="avcourses.length == 0">Вы уже записаны на все курсы</h1>
+        <h1 v-if="$store.state.user.id !== null && this.avcourses !== null">Вы уже записаны на все курсы</h1>
         <h1 class="error" v-if="$store.state.user.id === null">Для просмотра содержимого необходимо зарегистрироваться</h1>
     </div>
 </template>
@@ -61,7 +61,7 @@ export default {
     data(){
         return{
             user: this.$store.state.user,
-            avcourses: {},
+            avcourses: [],
         }
     },
     methods:{
@@ -70,7 +70,7 @@ export default {
             this.$router.push(`/courses/about/${id}`);
         }, 
         enroll(id){
-            this.axios.post('http://localhost:8080/api/courses', {userId: this.user.id, id: id}).then(res=>{
+            this.axios.post('/api/courses', {userId: this.user.id, id: id}).then(res=>{
                 console.log(res.data);
             }).catch(err=>console.log(err));
             this.$router.go(0);
