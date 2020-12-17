@@ -2,7 +2,7 @@
   <div class="wrapper_main grid">
     <div class="sidebar">
       <div class="top_items">
-        <span>Online School</span>
+        <span @click="toMain">Online School</span>
         <router-link to="/lessons"><i class="fas fa-film pad"></i>Мое обучение</router-link>
         <router-link to="/courses"><i class="far fa-envelope pad"></i>Программы обучения</router-link>
       </div>
@@ -41,7 +41,10 @@ export default {
       localStorage.removeItem("userName");
       localStorage.removeItem("userSurname");
       localStorage.removeItem("userPhone");
-    }
+    },
+     toMain(){
+       this.$router.push("/");
+     }
   },
   created: async function(){
     if(localStorage.getItem("userId")){
