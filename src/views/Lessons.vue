@@ -56,13 +56,6 @@ export default {
         }
     },
     created:function(){
-        // this.axios.post('http://localhost:8080/api/courses/get', {userId: this.user.id}).then(response=>{
-        //     console.log(response.data);
-        //     this.avcourses = response.data.avcourses;
-        //     this.mycourses = response.data.mycourses;
-            
-        // });
-    
         this.mycourses = this.$store.state.courses.mycourses;
         console.log('this.mycourses :>> ', this.mycourses);
     }
