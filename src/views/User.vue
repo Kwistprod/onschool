@@ -32,7 +32,9 @@ export default {
         async save(){
             this.axios.put('/api/user', this.user)
                 .then(res=>{
-                    alert('Данные успешно изменены!');
+                    if(res.status == 200){
+                        alert('Данные успешно изменены!');
+                    }
                 })
                 .catch(err=>console.log(err));
             if(this.user.name != ''){

@@ -31,7 +31,9 @@ export default {
     methods:{
         enroll(){
             this.axios.post('/api/courses', {userId: this.$store.state.user.id, id: this.about.id}).then(res=>{
-                alert('Вы успешно записались на курс!')
+                if(res.status){
+                    alert('Вы успешно записались на курс!')
+                }
             }).catch(err=>console.log(err));
             this.$router.go(-1);
         }

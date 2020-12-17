@@ -46,7 +46,9 @@ export default {
         }, 
         enroll(id){
             this.axios.post('/api/courses', {userId: this.user.id, id: id}).then(res=>{
-                alert('Вы успешно записались на курс!');
+                if(res.status == 200){
+                    alert('Вы успешно записались на курс!');
+                }
             }).catch(err=>console.log(err));
             this.$router.go(0);
         }
