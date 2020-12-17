@@ -33,8 +33,9 @@ export default {
                         this.$router.push("/");
                         this.axios.post('/api/courses/get', {userId: res.data.id}).then(res=>{
                             this.$store.commit("setCourses", res.data);
-                        console.log(this.$store.state.courses);
                     });
+                    }else{
+                        alert('Ошибка!');
                     }
                 })
                 .catch(err=>{
@@ -69,6 +70,10 @@ $color: #7fc7a8;
         padding: 1rem;
         font-size: 1.2rem;
     }
+}
+button:hover{
+  cursor:pointer;
+  background-color: #389b70;
 }
 .sign{
     display:flex;

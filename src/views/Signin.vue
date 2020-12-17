@@ -25,23 +25,26 @@ export default {
             if(this.user.login != '' && this.user.password != ''){
                 await this.axios.post('/api/user/auth', this.user)
                 .then(res=>{
-                    this.$store.commit('setId', res.data.id);
-                    this.$store.commit('setLogin', res.data.login);
-                    this.$store.commit('setName', res.data.name);
-                    this.$store.commit('setSurname', res.data.surname);
-                    this.$store.commit('setPhone', res.data.phone);
-                    //save to ls
-                    localStorage.setItem("userId", res.data.id);
-                    localStorage.setItem("userLogin", res.data.login);
-                    localStorage.setItem("userName", res.data.name);
-                    localStorage.setItem("userSurname", res.data.surname);
-                    localStorage.setItem("userPhone", res.data.phone);
-                    this.$router.push("/");
-                    console.log(this.$store.state.user);
-                    this.axios.post('/api/courses/get', {userId: res.data.id}).then(res=>{
-                        this.$store.commit("setCourses", res.data);
-                        console.log(this.$store.state.courses);
-                    });
+                    if(res.status === 200){
+                        this.$store.commit('setId', res.data.id);
+                        this.$store.commit('setLogin', res.data.login);
+                        this.$store.commit('setName', res.data.name);
+                        this.$store.commit('setSurname', res.data.surname);
+                        this.$store.commit('setPhone', res.data.phone);
+                        //save to ls
+                        localStorage.setItem("userId", res.data.id);
+                        localStorage.setItem("userLogin", res.data.login);
+                        localStorage.setItem("userName", res.data.name);
+                        localStorage.setItem("userSurname", res.data.surname);
+                        localStorage.setItem("userPhone", res.data.phone);
+                        this.$router.push("/");
+                        this.axios.post('/api/courses/get', {userId: res.data.id}).then(res=>{
+                            this.$store.commit("setCourses", res.data);
+                        });
+                    } else {
+                        alert('Ошибка');
+                        console.log(res.status);
+                    }
                 })
                 .catch(err=>{
                     alert('Ошибка');
@@ -74,6 +77,10 @@ $color: #7fc7a8;
         padding: 1rem;
         font-size: 1.2rem;
     }
+}
+button:hover{
+  cursor:pointer;
+  background-color: #389b70;
 }
 .sign{
     display:flex;

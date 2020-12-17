@@ -65,7 +65,7 @@ export default {
         console.log(this.$store.state.courses);
       });
     } else{
-      console.log('aa');
+      console.log('you r not authorized');
     }
   }
 }

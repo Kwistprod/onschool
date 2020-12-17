@@ -40,7 +40,7 @@ export default createStore({
       state.user.name = '';
       state.user.surname = '';
       state.user.phone = '';
-      // state.user.myCourses = null;
+      state.courses = null;
     }
   },
   actions: {

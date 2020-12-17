@@ -50,6 +50,7 @@ export default {
             if(ul.current_lesson == this.lesson.lesson_id){
                 this.course.Users[0].userlessons.find(item => item.course_id == this.$route.params.courseId).current_lesson++;
                 this.axios.put('/api/mylessons', ul).then(res=>console.log(res)).catch(err=>console.log(err));
+                alert('Успешно! Вам доступно следующее видео.');
             }
         },
         async sendDZ(){
@@ -57,36 +58,28 @@ export default {
             if(ul.current_dz == this.lesson.lesson_id){
                 this.course.Users[0].userlessons.find(item => item.course_id == this.$route.params.courseId).current_dz++;
                 this.axios.put('/api/mylessons', ul).then(res=>console.log(res)).catch(err=>console.log(err));
-                console.log(this.text);
+                alert('Успешно!');
             }
         },
         back(){
-            console.log('back');
             if(this.lesson.lesson_id > 1){
                 this.lesson.url = Object.assign(this.play, this.temp)
                 this.lesson = this.course.lessons.find(item=>item.lesson_id == (this.lesson.lesson_id -1));
-                console.log('this.lesson :>> ', this.lesson);
             }
         },
         forward(){
-            console.log('forw');
             if(this.lesson.lesson_id < this.lesson.total){
                 let ul = this.course.Users[0].userlessons.find(item => item.course_id == this.$route.params.courseId);
-                console.log(ul.current_lesson);
-                console.log(this.lesson.lesson_id);
                 if(ul.current_lesson >= (this.lesson.lesson_id+1)){
-                    console.log('yeap');
                     this.lesson = this.course.lessons.find(item=>item.lesson_id == (this.lesson.lesson_id + 1));
+            
                 }
-                console.log('this.lesson :>> ', this.lesson);
             }
         }
 
     },
     created(){
-        console.log(this.$route.params.lessonId);
         this.course = this.$store.state.courses.mycourses.find(item=>item.id == this.$route.params.courseId);
-        console.log('course :>> ', this.course);
         this.lesson = this.course.lessons.find(item=>item.lesson_id == this.$route.params.lessonId);
         
     }

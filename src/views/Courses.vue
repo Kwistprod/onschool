@@ -1,30 +1,6 @@
 <template>
     <div class="wrapper_content_courses">
         <div class="card_container" v-if="$store.state.user.id !== null">
-            <!-- <div class="card" v-for="(item, id) in mycourses" v-bind:key="id" >
-                <div class="side_left">
-                    <span class="scope">{{item.scope}}</span>
-                    <span>{{item.title}}</span>
-                    <span>Продолжить</span>
-                </div>
-                <div class="side_center">
-                    <div class="cont">
-                        <span><i class="fas fa-video pad"></i>{{item.lessons}}</span>
-                        <span>уроков(а)</span>
-                    </div>
-                    <div class="cont">
-                        <span><i class="fas fa-book pad"></i>{{item.lessons}}</span>
-                        <span>заданий(я)</span>
-                    </div>
-                    <div class="cont">
-                        <span><i class="fas fa-check pad"></i>65%</span>
-                        <span>прогресс</span>
-                    </div>
-                </div>
-                <div class="side_right">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-            </div> -->
 
             <div class="card" v-for="(item, id) in avcourses" v-bind:key="id" >
                 <div class="side_left">
@@ -51,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <h1 v-if="$store.state.user.id !== null && this.avcourses !== null">Вы уже записаны на все курсы</h1>
+        <h1 v-if="avcourses.length < 1 && $store.state.user.id !== null">Вы уже записаны на все курсы</h1>
         <h1 class="error" v-if="$store.state.user.id === null">Для просмотра содержимого необходимо зарегистрироваться</h1>
     </div>
 </template>
@@ -66,24 +42,17 @@ export default {
     },
     methods:{
         moveTo:function(id){
-            console.log('id :>> ', id);
             this.$router.push(`/courses/about/${id}`);
         }, 
         enroll(id){
             this.axios.post('/api/courses', {userId: this.user.id, id: id}).then(res=>{
-                console.log(res.data);
+                alert('Вы успешно записались на курс!');
             }).catch(err=>console.log(err));
             this.$router.go(0);
         }
     },
     created:function(){
         this.avcourses = this.$store.state.courses.avcourses;
-        // this.axios.post('http://localhost:8080/api/courses/get', {userId: this.user.id}).then(response=>{
-        //     console.log(response.data);
-        //     this.avcourses = response.data.avcourses;
-        //     this.mycourses = response.data.mycourses;
-            
-        // });
     }
 }
 </script>

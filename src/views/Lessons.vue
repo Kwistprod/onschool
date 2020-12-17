@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <h1 v-if="$store.state.user.id !== null && this.mycourses !== null">Вы еще не записаны ни на один курс</h1>
+        <h1 v-if="$store.state.user.id !== null && mycourses.length < 1">Вы еще не записаны ни на один курс</h1>
         <h1 class="error" v-if="$store.state.user.id === null">Для просмотра содержимого необходимо зарегистрироваться</h1>
     </div>
 </template>

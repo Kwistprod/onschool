@@ -32,7 +32,7 @@ export default {
         async save(){
             this.axios.put('/api/user', this.user)
                 .then(res=>{
-                    console.log(res);
+                    alert('Данные успешно изменены!');
                 })
                 .catch(err=>console.log(err));
             if(this.user.name != ''){
@@ -44,24 +44,26 @@ export default {
             if(this.user.phone != ''){
                 localStorage.setItem("userPhone", this.user.phone);
             }
-            console.log(this.$store.state.user);
         }
     },
     mounted:function(){
-        console.log(this.$store.state.user);
+
     }
 
 }
 </script>
 <style lang="scss">
 $color: #7fc7a8;
+button:hover{
+  cursor:pointer;
+  background-color: #389b70;
+}
 .wrapper_content_user{
     background-color:rgb(230, 230, 230);
     text-align: left;
     .title{
         font-size:2rem;
     }
-    //padding: 2rem 6rem; 
 }
 .user_top{
     padding: .5rem 3rem;

@@ -31,13 +31,12 @@ export default {
     methods:{
         enroll(){
             this.axios.post('/api/courses', {userId: this.$store.state.user.id, id: this.about.id}).then(res=>{
-                console.log(res.data);
+                alert('Вы успешно записались на курс!')
             }).catch(err=>console.log(err));
             this.$router.go(-1);
         }
     },
     created(){
-        console.log(this.$route.params.id);
         this.about = this.$store.state.courses.avcourses[this.$route.params.id]
     },
 }
@@ -45,6 +44,10 @@ export default {
 
 <style lang="scss">
 $color: #7fc7a8;
+button:hover{
+  cursor:pointer;
+  background-color: #389b70;
+}
 .about{
     .about_specs{
         margin-top: 5rem;
