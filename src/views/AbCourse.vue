@@ -36,6 +36,7 @@ export default {
                 }
             }).catch(err=>console.log(err));
             this.$router.go(-1);
+            this.$router.go(0);
         }
     },
     created(){

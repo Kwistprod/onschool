@@ -18,7 +18,7 @@
                         <span>заданий(я)</span>
                     </div>
                     <div class="cont">
-                        <span><i class="fas fa-check pad"></i>{{getPercent(item.Users[0].userlessons, item.id, item.classes)}}</span>
+                        <span><i class="fas fa-check pad"></i>{{getPercent(item.Users[0].userlessons, item.id, item.classes)}}%</span>
                         <span>прогресс</span>
                     </div>
                 </div>

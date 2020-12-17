@@ -72,6 +72,9 @@ export default {
 </script>
 <style lang="scss">
 $color: #7fc7a8;
+.pad{
+  margin: 0 .5rem;
+}
 #app {
   margin: 0 auto;
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -106,9 +109,6 @@ button:hover{
 }
 .header{
   grid-area: header;
-}
-.pad{
-  margin: 0 .5rem;
 }
 .sidebar {
   display:flex;
